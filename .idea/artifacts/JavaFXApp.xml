@@ -17,6 +17,7 @@
         <element id="module-output" name="DeliveryDepartment" />
         <element id="library" level="project" name="KotlinJavaRuntime" />
       </element>
+      <element id="library" level="project" name="mysql-connector-java_8.0.17-1ubuntu19" />
     </root>
   </artifact>
 </component>
