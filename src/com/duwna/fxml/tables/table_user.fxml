@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+
+<TableView fx:id="tableUser" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.duwna.controllers.tableControllers.TableUserController">
+  <columns>
+    <TableColumn fx:id="columnId" prefWidth="150.0" text="ID" />
+    <TableColumn fx:id="columnLogin" prefWidth="150.0" text="Логин" />
+      <TableColumn fx:id="columnPosition" prefWidth="150.0" text="Должность" />
+      <TableColumn fx:id="columnFirstName" prefWidth="150.0" text="Имя" />
+      <TableColumn fx:id="columnLastName" prefWidth="150.0" text="Фамилия" />
+      <TableColumn fx:id="columnPhone" minWidth="0.0" prefWidth="150.0" text="Телефон" />
+  </columns>
+</TableView>

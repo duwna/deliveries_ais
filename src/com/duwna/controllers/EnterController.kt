@@ -1,10 +1,12 @@
 package com.duwna.controllers
 
 import com.duwna.models.User
-import database.*
+import com.duwna.database.*
+import com.duwna.utils.showAlert
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.*
+import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
 import java.net.URL
 import java.sql.SQLException
@@ -14,144 +16,157 @@ import java.util.*
 class EnterController : Initializable {
 
     @FXML
-    lateinit var tf_firstName: TextField
+    lateinit var tfFirstName: TextField
     @FXML
-    lateinit var tf_lastName: TextField
+    lateinit var tfLastName: TextField
     @FXML
-    lateinit var tf_phone: TextField
+    lateinit var tfPhone: TextField
     @FXML
-    lateinit var tf_login: TextField
+    lateinit var tfLogin: TextField
     @FXML
-    lateinit var tf_password: PasswordField
+    lateinit var tfPassword: PasswordField
     @FXML
-    lateinit var tf_rePassword: PasswordField
+    lateinit var tfRePassword: PasswordField
     @FXML
-    lateinit var btn_reg: Button
+    lateinit var btnReg: Button
     @FXML
-    lateinit var label_current: Label
+    lateinit var labelCurrent: Label
     @FXML
-    lateinit var label_next: Label
+    lateinit var labelNext: Label
     @FXML
-    lateinit var rb_chief: RadioButton
+    lateinit var rbChief: RadioButton
     @FXML
-    lateinit var rb_ec: RadioButton
+    lateinit var rbEc: RadioButton
     @FXML
-    lateinit var rb_disp: RadioButton
+    lateinit var rbDisp: RadioButton
     @FXML
-    lateinit var label_connection: Label
+    lateinit var labelConnection: Label
     @FXML
-    lateinit var tf_user: TextField
+    lateinit var tfUser: TextField
     @FXML
-    lateinit var tf_pass: TextField
+    lateinit var tfPass: TextField
     @FXML
-    lateinit var tf_host: TextField
+    lateinit var tfHost: TextField
     @FXML
-    lateinit var tf_port: TextField
+    lateinit var tfPort: TextField
     @FXML
-    lateinit var label_connect: Label
+    lateinit var labelConnect: Label
+    @FXML
+    lateinit var vbox: VBox
 
-    var isRegistrationVisible = true
-    var isConnectionVisible = false
+    private var isRegistrationVisible = true
+    private var isConnectionVisible = false
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
 
+        initConnectionFields()
         tryConnection()
 
-        label_connect.setOnMouseClicked { tryConnection() }
-        label_connection.setOnMouseClicked { changeConnectionState() }
-        label_next.setOnMouseClicked { changeRegistrationState() }
+        labelConnect.setOnMouseClicked { tryConnection() }
+        labelConnection.setOnMouseClicked { changeConnectionState() }
+        labelNext.setOnMouseClicked { changeRegistrationState() }
 
-        btn_reg.setOnAction {
-            println(isConnectionVisible)
-            when {
-                isRegistrationVisible && DataBaseHandler.isConnected && validateRegistration() -> {
-                    //registration
-                    val user = DataBaseHandler.getUserByLogin(tf_login.text)
-                    if (user == null) {
-                        DataBaseHandler.insertUser(User(null,
-                                tf_login.text,
-                                tf_password.text,
-                                getPosition(),
-                                tf_firstName.text,
-                                tf_lastName.text,
-                                tf_phone.text.toLong()))
-                        showAlert("Регистрация прошла успешно!")
-                    } else
-                        showAlert("Пользователь с таким логином уже существует!")
-                }
-                !isRegistrationVisible && DataBaseHandler.isConnected && validateEnter() -> {
-                    //enter
-                    val user = DataBaseHandler.getUserByLogin(tf_login.text)
-                    if (user != null && user.password == tf_password.text)
-                        println("Enter successful")
-                    else showAlert("Неверный логин или пароль!")
-                }
-            }
+        btnReg.setOnAction {
+            if (isRegistrationVisible && DataBaseHandler.isConnected && validateRegistration())
+                registration()
+            else if (!isRegistrationVisible && DataBaseHandler.isConnected && validateEnter())
+                enter()
         }
     }
 
+    private fun registration() {
+        val user = DataBaseHandler.getUserByLogin(tfLogin.text)
+        if (user == null) {
+            DataBaseHandler.insertUser(User(null,
+                    tfLogin.text,
+                    tfPassword.text,
+                    getPosition(),
+                    tfFirstName.text,
+                    tfLastName.text,
+                    tfPhone.text.toLong()))
+            showAlert("Регистрация прошла успешно!")
+        } else
+            showAlert("Пользователь с таким логином уже существует!")
+    }
+
+    private fun enter() {
+        val user = DataBaseHandler.getUserByLogin(tfLogin.text)
+        if (user != null && user.password == tfPassword.text)
+            openNextWindow()
+        else showAlert("Неверный логин или пароль!")
+    }
+
+    private fun openNextWindow() {
+
+    }
 
     private fun changeRegistrationState() {
         if (isRegistrationVisible) {
-            label_current.text = "Вход"
-            label_next.text = "Зарегистрироваться"
-            tf_firstName.isVisible = false
-            tf_lastName.isVisible = false
-            tf_phone.isVisible = false
-            tf_rePassword.isVisible = false
-            rb_chief.isVisible = false
-            rb_ec.isVisible = false
-            rb_disp.isVisible = false
-            btn_reg.text = "Войти"
+            labelCurrent.text = "Вход"
+            labelNext.text = "Зарегистрироваться"
+            tfFirstName.isVisible = false
+            tfLastName.isVisible = false
+            tfPhone.isVisible = false
+            tfRePassword.isVisible = false
+            rbChief.isVisible = false
+            rbEc.isVisible = false
+            rbDisp.isVisible = false
+            btnReg.text = "Войти"
         } else {
-            label_current.text = "Регистрация"
-            label_next.text = "Войти"
-            tf_firstName.isVisible = true
-            tf_lastName.isVisible = true
-            tf_phone.isVisible = true
-            tf_rePassword.isVisible = true
-            rb_chief.isVisible = true
-            rb_ec.isVisible = true
-            rb_disp.isVisible = true
-            btn_reg.text = "Зарегистрироваться"
+            labelCurrent.text = "Регистрация"
+            labelNext.text = "Войти"
+            tfFirstName.isVisible = true
+            tfLastName.isVisible = true
+            tfPhone.isVisible = true
+            tfRePassword.isVisible = true
+            rbChief.isVisible = true
+            rbEc.isVisible = true
+            rbDisp.isVisible = true
+            btnReg.text = "Зарегистрироваться"
         }
         isRegistrationVisible = !isRegistrationVisible
     }
 
     private fun tryConnection() {
         try {
-            val url = "$DRIVER://${tf_host.text}:${tf_port.text}/$DATABASE"
-            DataBaseHandler.makeConnection(url, tf_user.text, tf_pass.text)
+            val url = "$DRIVER://${tfHost.text}:${tfPort.text}/$DATABASE"
+            DataBaseHandler.makeConnection(url, tfUser.text, tfPass.text)
             DataBaseHandler.isConnected = true
-            label_connection.textFill = Color.web("#116811")
+            labelConnection.textFill = Color.web("#116811")
         } catch (e: SQLException) {
             DataBaseHandler.isConnected = false
-            label_connection.textFill = Color.web("#ff0000")
+            labelConnection.textFill = Color.web("#ff0000")
         }
+    }
+
+    private fun initConnectionFields() {
+        tfUser.text = USER
+        tfHost.text = HOST
+        tfPass.text = PASSWORD
+        tfPort.text = PORT
     }
 
     private fun changeConnectionState() {
         if (isConnectionVisible) {
-            label_connect.isVisible = false
-            tf_port.isVisible = false
-            tf_host.isVisible = false
-            tf_user.isVisible = false
-            tf_pass.isVisible = false
+            labelConnect.isVisible = false
+            tfPort.isVisible = false
+            tfHost.isVisible = false
+            tfUser.isVisible = false
+            tfPass.isVisible = false
         } else {
-            label_connect.isVisible = true
-            tf_port.isVisible = true
-            tf_host.isVisible = true
-            tf_user.isVisible = true
-            tf_pass.isVisible = true
+            labelConnect.isVisible = true
+            tfPort.isVisible = true
+            tfHost.isVisible = true
+            tfUser.isVisible = true
+            tfPass.isVisible = true
         }
         isConnectionVisible = !isConnectionVisible
     }
 
-
     private fun getPosition() = when {
-        rb_ec.isSelected -> EC_POSITION
-        rb_disp.isSelected -> DISP_POSITION
-        rb_chief.isSelected -> CHIEF_POSITION
+        rbEc.isSelected -> EC_POSITION
+        rbDisp.isSelected -> DISP_POSITION
+        rbChief.isSelected -> CHIEF_POSITION
         else -> throw Exception()
     }
 
@@ -159,51 +174,51 @@ class EnterController : Initializable {
 
         var isValid = true
 
-        if (tf_firstName.text.isBlank()) {
-            tf_firstName.style = styleRed
+        if (tfFirstName.text.isBlank()) {
+            tfFirstName.style = styleHintRed
             isValid = false
-        } else tf_firstName.style = styleGray
+        } else tfFirstName.style = styleHintGray
 
-        if (tf_lastName.text.isBlank()) {
-            tf_lastName.style = styleRed
+        if (tfLastName.text.isBlank()) {
+            tfLastName.style = styleHintRed
             isValid = false
-        } else tf_lastName.style = styleGray
+        } else tfLastName.style = styleHintGray
 
-        if (tf_login.text.isBlank()) {
-            tf_login.style = styleRed
+        if (tfLogin.text.isBlank()) {
+            tfLogin.style = styleHintRed
             isValid = false
-        } else tf_login.style = styleGray
+        } else tfLogin.style = styleHintGray
 
         when {
-            tf_phone.text.isBlank() -> {
-                tf_phone.style = styleRed
+            tfPhone.text.isBlank() -> {
+                tfPhone.style = styleHintRed
                 isValid = false
             }
-            tf_phone.text.toLongOrNull() == null -> {
-                tf_phone.style = styleTextRed
+            tfPhone.text.toLongOrNull() == null -> {
+                tfPhone.style = styleTextRed
                 isValid = false
             }
             else -> {
-                tf_phone.style = styleGray
-                tf_phone.style = styleTextGray
+                tfPhone.style = styleHintGray
+                tfPhone.style = styleTextBlack
             }
         }
 
-        if (tf_password.text.isBlank()) {
-            tf_password.style = styleRed
+        if (tfPassword.text.isBlank()) {
+            tfPassword.style = styleHintRed
             isValid = false
-        } else tf_password.style = styleGray
+        } else tfPassword.style = styleHintGray
 
         when {
-            tf_rePassword.text.isBlank() -> {
-                tf_rePassword.style = styleRed
+            tfRePassword.text.isBlank() -> {
+                tfRePassword.style = styleHintRed
                 isValid = false
             }
-            tf_rePassword.text != tf_password.text -> {
-                tf_rePassword.style = styleTextRed
+            tfRePassword.text != tfPassword.text -> {
+                tfRePassword.style = styleTextRed
                 isValid = false
             }
-            else -> tf_rePassword.style = styleGray
+            else -> tfRePassword.style = styleHintGray
 
         }
 
@@ -214,27 +229,23 @@ class EnterController : Initializable {
 
         var isValid = true
 
-        if (tf_login.text.isBlank()) {
-            tf_login.style = styleRed
+        if (tfLogin.text.isBlank()) {
+            tfLogin.style = styleHintRed
             isValid = false
-        } else tf_login.style = styleGray
+        } else tfLogin.style = styleHintGray
 
-        if (tf_password.text.isBlank()) {
-            tf_password.style = styleRed
+        if (tfPassword.text.isBlank()) {
+            tfPassword.style = styleHintRed
             isValid = false
-        } else tf_password.style = styleGray
+        } else tfPassword.style = styleHintGray
 
         return isValid
     }
 
-    private fun showAlert(text: String) {
-        Alert(Alert.AlertType.NONE, text, ButtonType.OK).show()
-    }
-
     companion object {
-        const val styleRed = "-fx-prompt-text-fill: red;"
-        const val styleGray = "-fx-prompt-text-fill: gray;"
+        const val styleHintRed = "-fx-prompt-text-fill: red;"
+        const val styleHintGray = "-fx-prompt-text-fill: gray;"
         const val styleTextRed = "-fx-text-inner-color: red;"
-        const val styleTextGray = "-fx-text-inner-color: gray;"
+        const val styleTextBlack = "-fx-text-inner-color: black;"
     }
 }

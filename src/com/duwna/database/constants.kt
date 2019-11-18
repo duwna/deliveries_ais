@@ -1,4 +1,4 @@
-package database
+package com.duwna.database
 
 const val USER = "root"
 const val PASSWORD = "1234"

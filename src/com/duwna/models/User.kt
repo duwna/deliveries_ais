@@ -11,4 +11,14 @@ data class User(
 ) {
     fun makeInsertString(): String =
         "INSERT INTO User VALUES (default, '$login', '$password', $position, '$firstName', '$lastName', $phone)"
+
+    companion object {
+        const val COLUMN_ID_USER = "idUser"
+        const val COLUMN_LOGIN = "login"
+        const val COLUMN_PASSWORD = "password"
+        const val COLUMN_POSITION = "position"
+        const val COLUMN_FIRST_NAME = "firstName"
+        const val COLUMN_LAST_NAME = "lastName"
+        const val COLUMN_PHONE = "phone"
+    }
 }

@@ -13,15 +13,30 @@ class Main : Application() {
     @Throws(Exception::class)
     override fun start(primaryStage: Stage) {
         val root = FXMLLoader.load<Parent>(javaClass.getResource("/com/duwna/fxml/enter.fxml"))
-        with(primaryStage){
+        with(primaryStage) {
             title = "Отдел доставок"
             minWidth = 350.0
             minHeight = 600.0
             primaryStage.scene = Scene(root, 1024.0, 768.0)
             primaryStage.show()
         }
+//        val detail = FXMLLoader.load<Parent>(javaClass.getResource("/com/duwna/fxml/tables/table_detail.fxml"))
+//        Stage().apply{
+//            title = ""
+//            minWidth = 350.0
+//            minHeight = 600.0
+//            scene = Scene(detail, 1024.0, 768.0)
+//            show()
+//        }
+        val provider = FXMLLoader.load<Parent>(javaClass.getResource("/com/duwna/fxml/tables/table_provider.fxml"))
+        Stage().apply{
+            title = ""
+            minWidth = 350.0
+            minHeight = 600.0
+            scene = Scene(provider, 1024.0, 768.0)
+            show()
+        }
     }
-
 
 
     companion object {
