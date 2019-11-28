@@ -1,4 +1,4 @@
-package com.duwna.controllers.tableControllers
+package com.duwna.controllers
 
 import com.duwna.database.DataBaseHandler
 import com.duwna.database.PASSWORD

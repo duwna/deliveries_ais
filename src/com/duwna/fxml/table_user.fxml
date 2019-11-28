@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TableView?>
 
 
-<TableView fx:id="tableUser" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.duwna.controllers.tableControllers.TableUserController">
+<TableView fx:id="tableUser" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.duwna.controllers.TableUserController">
   <columns>
     <TableColumn fx:id="columnId" prefWidth="150.0" text="ID" />
     <TableColumn fx:id="columnLogin" prefWidth="150.0" text="Логин" />

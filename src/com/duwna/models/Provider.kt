@@ -6,17 +6,17 @@ data class Provider(
         val rating: Float,
         val city: String,
         val address: String
-) {
-    fun makeInsertString(): String =
+) : BaseModel {
+
+    override fun makeInsertString(): String =
             "INSERT INTO Provider VALUES (default, '$name', $rating, '$city', '$address')"
 
-    fun makeUpdateString(): String = "UPDATE Provider SET " +
+    override fun makeUpdateString(): String = "UPDATE Provider SET " +
             "$COLUMN_NAME = '$name'," +
             "$COLUMN_RATING = $rating," +
             "$COLUMN_CITY = '$city'," +
             "$COLUMN_ADDRESS = '$address' " +
             "WHERE $COLUMN_ID_PROVIDER = $idProvider"
-
 
     companion object {
         const val COLUMN_ID_PROVIDER = "idProvider"
