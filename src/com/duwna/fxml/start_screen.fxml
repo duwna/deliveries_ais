@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.duwna.controllers.StartScreenController">
+   <children>
+      <Label fx:id="labelFullName" text="Label">
+         <font>
+            <Font size="30.0" />
+         </font>
+         <VBox.margin>
+            <Insets bottom="50.0" />
+         </VBox.margin>
+      </Label>
+      <Label text="Детали и поставщики" textFill="#231d65">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label text="Заказы и неустойка" textFill="#231d65">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label text="Сделать заказ" textFill="#231d65">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Label text="Редактировать данные профиля" textFill="#231d65">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+   </children>
+</VBox>

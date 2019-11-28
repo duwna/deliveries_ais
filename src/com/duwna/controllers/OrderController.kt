@@ -3,7 +3,7 @@ package com.duwna.controllers
 import com.duwna.database.DataBaseHandler
 import com.duwna.models.*
 import com.duwna.utils.showAlert
-import com.duwna.utils.sqlFormat
+import com.duwna.utils.sqlDateTime
 import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
@@ -133,13 +133,18 @@ class OrderController : Initializable {
                 else -> {
                     DataBaseHandler.insertOrder(Order(
                             null,
-                            Date().sqlFormat(),
-                            "${datePicker.value} 12:00:00",
+                            Date().sqlDateTime(),
+                            datePicker.value.toString(),
                             null))
                     val idOrder = DataBaseHandler.getLastOrderId()
                     contentList.forEach {
                         DataBaseHandler.insertContentOrder(it.toContentOrder(idOrder))
                     }
+                    val provider = DataBaseHandler.getProviderByOrder(idOrder)
+                    var rating = provider.rating
+                    rating += 0.1f
+                    DataBaseHandler.updateRating(provider.idProvider!!, rating)
+                    showProviders()
                     contentList.clear()
                     showContent()
                     updateTotal()
@@ -152,6 +157,10 @@ class OrderController : Initializable {
     private fun initProviderTable() {
         columnProviderName.cellValueFactory = PropertyValueFactory(Provider.COLUMN_NAME)
         columnRating.cellValueFactory = PropertyValueFactory(Provider.COLUMN_RATING)
+        showProviders()
+    }
+
+    private fun showProviders() {
         tableProvider.items = DataBaseHandler.getProviderList()
     }
 

@@ -1,13 +1,17 @@
 package com.duwna.controllers
 
-import com.duwna.models.User
 import com.duwna.database.*
+import com.duwna.models.User
 import com.duwna.utils.showAlert
 import javafx.fxml.FXML
+import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
+import javafx.scene.Parent
+import javafx.scene.Scene
 import javafx.scene.control.*
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
+import javafx.stage.Stage
 import java.net.URL
 import java.sql.SQLException
 import java.util.*
@@ -92,14 +96,13 @@ class EnterController : Initializable {
     private fun enter() {
         val user = DataBaseHandler.getUserByLogin(tfLogin.text)
         if (user != null && user.password == tfPassword.text)
-            openNextWindow()
+            openNextWindow(user)
         else showAlert("Неверный логин или пароль!")
     }
 
-    private fun openNextWindow() {
+    private fun openNextWindow (user: User) {
 
     }
-
     private fun changeRegistrationState() {
         if (isRegistrationVisible) {
             labelCurrent.text = "Вход"

@@ -14,3 +14,6 @@ const val EC_POSITION: Short = 1
 const val DISP_POSITION: Short = 2
 const val CHIEF_POSITION: Short = 3
 
+const val DATE_FORMAT = "yyyy-MM-dd"
+const val DATE_TIME_FORMAT = "YYYY-MM-dd HH:mm:ss"
+

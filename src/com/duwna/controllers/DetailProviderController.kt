@@ -157,13 +157,17 @@ class DetailProviderController : Initializable {
     }
 
     private fun insertDetailProvider() {
-        DataBaseHandler.insertDetailProvider(DetailProvider(
-                null,
-                tableDetail.selectionModel.selectedItem.idDetail!!,
-                tableProvider.selectionModel.selectedItem.idProvider!!,
-                tfPrice.text.toFloat()
-        ))
-        showPrices(tableProvider.selectionModel.selectedItem.idProvider!!)
+        val idProvider = tableProvider.selectionModel.selectedItem.idProvider!!
+        val idDetail = tableDetail.selectionModel.selectedItem.idDetail!!
+        if (!DataBaseHandler.checkDetailProvider(idDetail, idProvider)) {
+            DataBaseHandler.insertDetailProvider(DetailProvider(
+                    null,
+                    idDetail,
+                    idProvider,
+                    tfPrice.text.toFloat()
+            ))
+            showPrices(idProvider)
+        } else showAlert("У этой детали уже есть цена.")
     }
 
     private fun deleteDetailProvider() {
