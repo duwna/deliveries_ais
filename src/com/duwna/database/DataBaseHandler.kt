@@ -14,8 +14,9 @@ object DataBaseHandler {
     private lateinit var statement: Statement
     private lateinit var resultSet: ResultSet
 
-    var isConnected = false
+    lateinit var currentUser: User
 
+    var isConnected = false
     fun makeConnection(url: String, user: String, pass: String) {
         connection = DriverManager.getConnection(url, user, pass)
         statement = connection.createStatement()
@@ -144,14 +145,12 @@ object DataBaseHandler {
                 resultSet.getString(Provider.COLUMN_ADDRESS))
     }
 
-    //"SELECT Provider.rating FROM `Order` JOIN ContentOrder ON `Order`.idOrder = ContentOrder.idOrder JOIN DetailProvider ON ContentOrder.idDetailProvider = DetailProvider.idDetailProvider JOIN Provider ON DetailProvider.idProvider = Provider.idProvider WHERE `Order`.idOrder = $idOrder LIMIT 1"
-
     fun getPenaltyByOrderId(idOrder: Int): Float? {
         resultSet = statement.executeQuery("SELECT sum FROM Penalty WHERE idOrder = $idOrder")
-        return if(resultSet.next()) resultSet.getFloat(1) else null
+        return if (resultSet.next()) resultSet.getFloat(1) else null
     }
 
-    fun getSumByOrderId(idOrder: Int) : Float {
+    fun getSumByOrderId(idOrder: Int): Float {
         resultSet = statement.executeQuery("SELECT SUM(sum) from `Order` " +
                 "JOIN ContentOrder ON `Order`.idOrder = ContentOrder.idOrder " +
                 "WHERE `Order`.idOrder = $idOrder;")
@@ -179,9 +178,12 @@ object DataBaseHandler {
 
     fun updateProvider(provider: Provider) = statement.executeUpdate(provider.makeUpdateString())
     fun updateDetail(detail: Detail) = statement.executeUpdate(detail.makeUpdateString())
+    fun updateUser(user: User) = statement.executeUpdate(user.makeUpdateString())
+
     fun setDeliveryDate(idOrder: Int, date: String) {
         statement.executeUpdate("UPDATE `Order` set deliveryDate = '$date' WHERE idOrder = $idOrder")
     }
+
     fun updateRating(idProvider: Int, rating: Float) = statement.executeUpdate("UPDATE Provider SET rating = $rating WHERE idProvider = $idProvider")
 
     fun deleteUser(id: Int) = statement.executeUpdate("DELETE FROM User WHERE idUser = $id")

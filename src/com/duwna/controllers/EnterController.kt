@@ -2,16 +2,15 @@ package com.duwna.controllers
 
 import com.duwna.database.*
 import com.duwna.models.User
+import com.duwna.utils.openNextWindow
 import com.duwna.utils.showAlert
+import javafx.event.ActionEvent
 import javafx.fxml.FXML
-import javafx.fxml.FXMLLoader
 import javafx.fxml.Initializable
-import javafx.scene.Parent
-import javafx.scene.Scene
+import javafx.scene.Node
 import javafx.scene.control.*
 import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
-import javafx.stage.Stage
 import java.net.URL
 import java.sql.SQLException
 import java.util.*
@@ -74,7 +73,7 @@ class EnterController : Initializable {
             if (isRegistrationVisible && DataBaseHandler.isConnected && validateRegistration())
                 registration()
             else if (!isRegistrationVisible && DataBaseHandler.isConnected && validateEnter())
-                enter()
+                enter(it)
         }
     }
 
@@ -93,16 +92,15 @@ class EnterController : Initializable {
             showAlert("Пользователь с таким логином уже существует!")
     }
 
-    private fun enter() {
+    private fun enter(event: ActionEvent) {
         val user = DataBaseHandler.getUserByLogin(tfLogin.text)
-        if (user != null && user.password == tfPassword.text)
-            openNextWindow(user)
-        else showAlert("Неверный логин или пароль!")
+        if (user != null && user.password == tfPassword.text) {
+            DataBaseHandler.currentUser = user
+            openNextWindow(javaClass.getResource("/com/duwna/fxml/start_screen.fxml"), "Добро пожаловать")
+            (event.source as Node).scene.window.hide()
+        } else showAlert("Неверный логин или пароль!")
     }
 
-    private fun openNextWindow (user: User) {
-
-    }
     private fun changeRegistrationState() {
         if (isRegistrationVisible) {
             labelCurrent.text = "Вход"

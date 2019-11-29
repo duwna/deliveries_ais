@@ -18,14 +18,26 @@
          <items>
             <SplitPane dividerPositions="0.5" orientation="VERTICAL">
               <items>
-                  <Label text="Поставщики">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="10.0" top="10.0" />
-                     </padding>
-                  </Label>
+                  <HBox alignment="CENTER" maxHeight="20.0" spacing="10.0">
+                     <children>
+                        <Label text="Поставщики">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="btnUpdate" text="Обновить" textFill="#271979">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
                   <TableView fx:id="tableProvider" prefHeight="605.0" prefWidth="312.0">
                      <columns>
                         <TableColumn fx:id="columnProviderName" prefWidth="165.0" text="Название" />

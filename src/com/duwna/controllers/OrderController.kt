@@ -56,6 +56,8 @@ class OrderController : Initializable {
     lateinit var btnAdd: Button
     @FXML
     lateinit var btnDelete: Button
+    @FXML
+    lateinit var btnUpdate: Label
 
     private val contentList = FXCollections.observableArrayList<Content>()
 
@@ -96,6 +98,10 @@ class OrderController : Initializable {
                 showContent()
             }
             updateTotal()
+        }
+
+        btnUpdate.setOnMouseClicked {
+            showProviders()
         }
 
         btnAdd.setOnAction {

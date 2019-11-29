@@ -1,5 +1,7 @@
 package com.duwna.controllers
 
+import com.duwna.database.CHIEF_POSITION
+import com.duwna.database.DISP_POSITION
 import com.duwna.database.DataBaseHandler
 import com.duwna.models.Order
 import com.duwna.models.Penalty
@@ -48,12 +50,22 @@ class DeliveryController : Initializable {
     lateinit var labelPenalty: Label
     @FXML
     lateinit var labelSum: Label
+    @FXML
+    lateinit var btnUpdate: Label
 
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
+
+        when (DataBaseHandler.currentUser.position) {
+            DISP_POSITION -> btnDeleteOrder.isVisible = false
+            CHIEF_POSITION -> btnSetDate.isVisible = false
+        }
+
         initOrderTable()
         initContentTable()
         showOrders()
+
+        btnUpdate.setOnMouseClicked { showOrders() }
 
         tableOrder.setOnMouseClicked {
             val order = tableOrder.selectionModel.selectedItem

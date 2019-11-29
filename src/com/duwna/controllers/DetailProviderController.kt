@@ -77,6 +77,10 @@ class DetailProviderController : Initializable {
     lateinit var btnPriceAdd: Button
     @FXML
     lateinit var btnPriceDelete: Button
+    @FXML
+    lateinit var btnUpdateProviders: Label
+    @FXML
+    lateinit var btnUpdateDetails: Label
 
 
     override fun initialize(location: URL?, resources: ResourceBundle?) {
@@ -118,6 +122,9 @@ class DetailProviderController : Initializable {
 
         btnPriceAdd.setOnAction { insertDetailProvider() }
         btnPriceDelete.setOnAction { deleteDetailProvider() }
+
+        btnUpdateDetails.setOnMouseClicked { showDetails() }
+        btnUpdateProviders.setOnMouseClicked { showProviders() }
     }
 
     private fun initPricesTable() {

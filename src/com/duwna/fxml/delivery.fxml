@@ -27,6 +27,14 @@
                <children>
                   <HBox alignment="CENTER" maxHeight="150.0" minWidth="150.0" spacing="20.0">
                      <children>
+                        <Label fx:id="btnUpdate" text="Обновить" textFill="#271979">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </Label>
                         <Label text="Id заказа:">
                            <font>
                               <Font size="20.0" />

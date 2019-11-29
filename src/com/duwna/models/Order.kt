@@ -9,9 +9,8 @@ data class Order (
 
     override fun makeInsertString(): String = "INSERT INTO `Order` VALUES (default, '$orderDateTime', '$expectedDate', null)"
 
-    override fun makeUpdateString(): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun makeUpdateString(): String = ""
+
     companion object {
         const val ID_ORDER = "idOrder"
         const val ORDER_DATETIME = "orderDateTime"

@@ -10,9 +10,7 @@ data class ContentOrder(
 
     override fun makeInsertString(): String = "INSERT INTO ContentOrder VALUES (default, $idOrder, $idDetailProvider, $quantity, $sum)"
 
-    override fun makeUpdateString(): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun makeUpdateString(): String = ""
 
     companion object {
         const val ID_CONTENT_ORDER = "idContentOrder"

@@ -18,14 +18,26 @@
          <items>
             <VBox alignment="TOP_CENTER" spacing="20.0">
                <children>
-                  <Label text="Поставщики">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="10.0" top="10.0" />
-                     </padding>
-                  </Label>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Label text="Поставщики">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="btnUpdateProviders" text="Обновить" textFill="#271979">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
                   <TextField fx:id="tfProviderName" promptText="Название">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" />
@@ -53,14 +65,26 @@
             </VBox>
             <VBox alignment="TOP_CENTER" spacing="20.0">
                <children>
-                  <Label text="Детали">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="10.0" top="10.0" />
-                     </padding>
-                  </Label>
+                  <HBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <Label text="Детали">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="btnUpdateDetails" text="Обновить" textFill="#271979">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                           <padding>
+                              <Insets bottom="10.0" top="10.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
                   <TextField fx:id="tfDetailName" promptText="Название">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" />

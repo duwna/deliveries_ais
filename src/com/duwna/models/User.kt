@@ -10,9 +10,14 @@ data class User(
         val phone: Long
 ) : BaseModel {
 
-    override fun makeUpdateString(): String {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun makeUpdateString(): String = "UPDATE User SET " +
+            "$COLUMN_LOGIN = '$login'," +
+            "$COLUMN_PASSWORD = '$password'," +
+            "$COLUMN_POSITION = $position, " +
+            "$COLUMN_FIRST_NAME = '$firstName', " +
+            "$COLUMN_LAST_NAME = '$lastName', " +
+            "$COLUMN_PHONE = $phone " +
+            "WHERE $COLUMN_ID_USER = $idUser"
 
     override fun makeInsertString(): String =
             "INSERT INTO User VALUES (default, '$login', '$password', $position, '$firstName', '$lastName', $phone)"
